@@ -473,8 +473,6 @@ class MagentoWebDriver extends WebDriver
      */
     public function _failed(TestInterface $test, $fail)
     {
-        parent::_failed($test, $fail);
-
         // Reconstruct file naming from codeception method
         $filename = preg_replace('~\W~', '.', Descriptor::getTestSignature($test));
         $outputDir = codecept_output_dir();
@@ -482,5 +480,7 @@ class MagentoWebDriver extends WebDriver
         $htmlReport = $outputDir . mb_strcut($filename, 0, 244, 'utf-8') . '.fail.html';
         $this->addAttachment($pngReport, $test->getMetadata()->getName() . '.png', 'image/png');
         $this->addAttachment($htmlReport, $test->getMetadata()->getName() . '.html', 'text/html');
+
+        parent::_failed($test, $fail);
     }
 }
